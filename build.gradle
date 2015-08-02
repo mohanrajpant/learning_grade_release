@@ -20,13 +20,13 @@ repositories {
 publishing {
     repositories {
         maven {
-            name "snaphots"
-            url "/Users/mohanpant/.m2/repository"
+            if ( project.version.endsWith('-SNAPSHOT') ) {
+                url "/Users/mohanpant/.m2/repository"
+            } else {
+                url "/Users/mohanpant/.m2/repository"
+            }
         }
-        maven {
-            name "release"
-            url "/Users/mohanpant/.m2/repository"
-        }
+
     }
 }
 
@@ -38,8 +38,8 @@ publishing {
     }
 }
 
-createReleaseTag.dependsOn publishMavenJavaPublicationToReleaseRepository
-
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
+
+createReleaseTag.dependsOn publishing
